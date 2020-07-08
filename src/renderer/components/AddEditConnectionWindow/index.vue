@@ -28,17 +28,21 @@
             <select v-model="conn.authType">
               <option value="password">Password</option>
               <option value="key-file">Private Key (file)</option>
-              <!-- <option value="key-input" disabled>Private Key (input)</option> -->
+              <option value="key-file-password">Private Key (file) + Password</option>
             </select>
           </div>
-          <div v-show="conn.authType === 'password'" class="form-item">
-            <label>Password</label>
-            <input type="password" v-model="conn.password">
+          
+          <div class="form-row">
+            <div v-show="conn.authType === 'key-file' || conn.authType === 'key-file-password'" class="form-item">
+              <label>Key File</label>
+              <input type="text" placeholder="eg. C:\Users\me\.ssh\id_rsa.pub" v-model="conn.keyFile">
+            </div>
+            <div v-show="conn.authType === 'password' || conn.authType === 'key-file-password'" class="form-item">
+              <label>Password</label>
+              <input type="password" v-model="conn.password">
+            </div>
           </div>
-          <div v-show="conn.authType === 'key-file'" class="form-item">
-            <label>Key File</label>
-            <input type="text" placeholder="eg. C:\Users\me\.ssh\id_rsa.pub" v-model="conn.keyFile">
-          </div>
+          
           <div v-show="conn.authType === 'key-input'" class="form-item">
             <label>Key</label>
             <textarea placeholder="eg. ssh-rsa AAAAB3Nz..." v-model="conn.key"></textarea>
